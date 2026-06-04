@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranQuangKha- Liên Kết Các Website</title>
+    <style>
+        /* Reset CSS cơ bản */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Giao diện nền chuyển màu mượt mà */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        /* Khung chứa trung tâm - Hiệu ứng kính mờ (Glassmorphism) */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Phần Avatar giả lập xịn xò */
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        }
+
+        /* Tên và giới thiệu ngắn */
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 35px;
+        }
+
+        /* Danh sách các nút liên kết */
+        .links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* Khoảng cách giữa các nút */
+        }
+
+        /* Style cho từng nút liên kết */
+        .link-card {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng khi di chuột (Hover) vào nút */
+        .link-card:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(90deg, #7928ca 0%, #ff007f 100%);
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(121, 40, 202, 0.3);
+        }
+
+        /* Phụ đề nhỏ bên trong nút tạo cảm giác UI chi tiết */
+        .link-card span {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-top: 4px;
+            transition: color 0.3s;
+        }
+
+        .link-card:hover span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer nhỏ tinh tế */
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Ảnh đại diện (Bạn có thể thay chữ KT bằng thẻ <img> nếu muốn) -->
+        <div class="avatar">KT</div>
+
+        <h1>Trần Quang Khã</h1>
+        <p class="subtitle">Thiết kế trang Web | Các Dự Án của Tôi</p>
+
+        <!-- Nơi chứa các liên kết của bạn -->
+        <div class="links-group">
+            
+            <a href="https://khatran1806.github.io/khalmhntherr/" target="_blank" class="link-card">
+                Bài Thơ 
+            </a>
+
+            <a href="https://khatran1806.github.io/kharrlnhm.github.io/" target="_blank" class="link-card">
+                Nhạc Yêu Thích
+            </a>
+
+            <a href="https://khatran1806.github.io/khalmhn/" target="_blank" class="link-card">
+                Giới thiệu bản thân 
+            </a>
+            <a href="dangnhap.html" target="_blank" class="link-card">
+                Đăng Nhập
+            </a>
+
+        </div>
+
+        <div class="footer">
+            Designed by Trần Quang Khã © 2026
+        </div>
+    </div>
+
+</body>
+</html>

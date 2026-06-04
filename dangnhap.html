@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE html: Khai báo đây là tài liệu HTML5
+  Trình duyệt sẽ hiểu cách đọc file này
+-->
+<html lang="vi">
+<!--
+  <html>: Thẻ gốc bao toàn bộ trang
+  lang="vi": Khai báo ngôn ngữ là tiếng Việt
+-->
+
+<head>
+  <!-- <head>: Phần đầu, chứa thông tin cấu hình, không hiển thị trực tiếp -->
+  
+  <meta charset="UTF-8">
+  <!-- Cho phép hiển thị tiếng Việt (ă, ơ, ư...) -->
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Giúp trang web hiển thị đúng trên điện thoại -->
+  
+  <title>Đăng Nhập</title>
+  <!-- Tên hiển thị trên tab trình duyệt -->
+
+  <!-- ==========================
+       GOOGLE FONTS - Import font chữ đẹp từ internet
+       Sử dụng font "Nunito" - mềm mại, hiện đại
+  ========================== -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==================================================
+       CSS - CASCADING STYLE SHEETS
+       CSS dùng để TÔ MÀU, ĐỊNH HÌNH, SẮP XẾP các thẻ HTML
+       Cú pháp: tên-thẻ { thuộc-tính: giá-trị; }
+    ================================================== */
+
+    /* ---- ĐẶT BIẾN MÀU SẮC TOÀN CỤC ---- 
+       :root là "gốc" của trang, đặt biến ở đây
+       dùng lại ở bất cứ đâu bằng var(--tên-biến)
+       → Muốn đổi màu cả trang chỉ cần sửa 1 chỗ! */
+    :root {
+      --mau-chinh: #FF6B6B;        /* Đỏ san hô - màu chủ đạo */
+      --mau-phu: #4ECDC4;          /* Xanh ngọc - màu phụ */
+      --mau-nen: #1a1a2e;          /* Xanh đen đậm - nền trang */
+      --mau-card: #16213e;         /* Xanh đen nhạt hơn - nền form */
+      --mau-input: #0f3460;        /* Xanh đậm - nền ô nhập */
+      --mau-chu: #ffffff;          /* Trắng - màu chữ chính */
+      --mau-chu-mo: #a0aec0;       /* Xám nhạt - chữ mờ */
+      --bong: 0 20px 60px rgba(255,107,107,0.3); /* Bóng đổ đỏ */
+    }
+
+    /* ---- RESET MẶC ĐỊNH CỦA TRÌNH DUYỆT ----
+       * = áp dụng cho TẤT CẢ thẻ
+       box-sizing: border-box → padding không làm rộng thêm phần tử */
+    * {
+      margin: 0;          /* Xóa khoảng cách ngoài mặc định */
+      padding: 0;         /* Xóa khoảng đệm mặc định */
+      box-sizing: border-box;
+    }
+
+    /* ---- BODY - THÂN TRANG ---- */
+    body {
+      font-family: 'Nunito', sans-serif; /* Font chữ đã import */
+      background-color: var(--mau-nen);  /* Màu nền từ biến */
+      min-height: 100vh;  /* Chiều cao tối thiểu = 100% màn hình (vh = viewport height) */
+      
+      /* Flexbox: xếp phần tử theo hàng/cột, căn giữa */
+      display: flex;
+      justify-content: center; /* Căn giữa theo chiều NGANG */
+      align-items: center;     /* Căn giữa theo chiều DỌC */
+      
+      /* Background gradient + pattern trang trí */
+      background-image: 
+        radial-gradient(ellipse at 20% 50%, rgba(255,107,107,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(78,205,196,0.08) 0%, transparent 50%);
+    }
+
+    /* ---- VÒNG TRANG TRÍ NỀN ---- 
+       Dùng ::before và ::after để tạo hình trang trí
+       mà không cần thêm thẻ HTML */
+    body::before, body::after {
+      content: '';           /* Bắt buộc có để hiển thị */
+      position: fixed;       /* Cố định trên màn hình */
+      border-radius: 50%;    /* Bo tròn thành hình tròn */
+      opacity: 0.05;
+      
+      /* animation: tên thời-gian kiểu lặp-vô-hạn */
+      animation: xoay 20s linear infinite;
+    }
+    body::before {
+      width: 500px; height: 500px;
+      border: 2px solid var(--mau-chinh);
+      top: -100px; left: -100px;
+    }
+    body::after {
+      width: 400px; height: 400px;
+      border: 2px solid var(--mau-phu);
+      bottom: -100px; right: -100px;
+      animation-direction: reverse; /* Quay ngược chiều */
+    }
+.back-btn{
+    position:fixed;
+    top:20px;
+    left:20px;
+
+    background:#ffcfec;
+    color:#fff;
+    text-decoration:none;
+
+    padding:14px 22px;
+    border-radius:15px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-weight:600;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+    /* ---- CARD FORM ĐĂNG NHẬP ---- */
+    .card {
+      background: var(--mau-card);
+      width: 420px;
+      padding: 50px 40px;
+      border-radius: 24px;         /* Bo góc */
+      box-shadow: var(--bong);     /* Bóng đổ từ biến */
+      
+      /* Viền gradient: tạo đường viền màu sắc */
+      border: 1px solid rgba(255,107,107,0.2);
+      
+      position: relative;  /* Để các phần tử con dùng position: absolute */
+      overflow: hidden;    /* Cắt các phần tử con vượt ra ngoài */
+
+      /* animation xuất hiện khi load trang */
+      animation: hienRa 0.6s ease-out both;
+    }
+
+    /* Dải màu trang trí phía trên card */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px; /* Chỉ cao 3px */
+      background: linear-gradient(90deg, var(--mau-chinh), var(--mau-phu));
+    }
+
+    /* ---- TIÊU ĐỀ ---- */
+    .tieu-de {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    .bieu-tuong {         /* Icon khóa */
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+      animation: nhayLen 0.8s ease-out 0.3s both;
+    }
+    .tieu-de h1 {
+      color: var(--mau-chu);
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .tieu-de p {
+      color: var(--mau-chu-mo);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    /* ---- NHÓM INPUT (label + input) ---- */
+    .nhom-input {
+      margin-bottom: 20px;
+    }
+    
+    /* label: nhãn mô tả ô nhập */
+    .nhom-input label {
+      display: block;      /* Hiển thị trên dòng riêng */
+      color: var(--mau-chu-mo);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase; /* Viết HOA */
+      letter-spacing: 0.8px;     /* Giãn chữ */
+    }
+
+    /* ---- VỎ BỌC INPUT (để thêm icon) ---- */
+    .vo-input {
+      position: relative;  /* Để icon dùng absolute bên trong */
+    }
+    .vo-input .icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%); /* Căn giữa dọc chính xác */
+      font-size: 18px;
+      pointer-events: none; /* Click xuyên qua, không cản input */
+    }
+
+    /* ---- Ô NHẬP LIỆU (input[type=text], input[type=password]) ---- */
+    .nhom-input input[type="text"],
+    .nhom-input input[type="password"] {
+      width: 100%;         /* Chiếm hết chiều rộng */
+      padding: 14px 14px 14px 44px; /* top right bottom left - trái rộng cho icon */
+      background: var(--mau-input);
+      border: 2px solid transparent;  /* Viền trong suốt mặc định */
+      border-radius: 12px;
+      color: var(--mau-chu);
+      font-size: 15px;
+      font-family: 'Nunito', sans-serif;
+      
+      /* transition: hiệu ứng mượt khi thay đổi thuộc tính */
+      /* tên-thuộc-tính   thời-gian  kiểu-mượt */
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    /* :focus = khi đang click vào ô nhập (đang gõ) */
+    .nhom-input input[type="text"]:focus,
+    .nhom-input input[type="password"]:focus {
+      outline: none;       /* Xóa viền mặc định của trình duyệt */
+      border-color: var(--mau-chinh);  /* Hiện viền đỏ */
+      background: rgba(15, 52, 96, 0.8);
+      box-shadow: 0 0 0 3px rgba(255,107,107,0.15); /* Halo đỏ nhạt */
+    }
+
+    /* ::placeholder = chữ gợi ý bên trong ô trống */
+    .nhom-input input::placeholder {
+      color: rgba(160, 174, 192, 0.5);
+    }
+
+    /* ---- GIỚI TÍNH (radio buttons) ---- */
+    .gioi-tinh-label {
+      color: var(--mau-chu-mo);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .nhom-radio {
+      display: flex;    /* Xếp các lựa chọn theo hàng ngang */
+      gap: 12px;        /* Khoảng cách giữa các item */
+      margin-bottom: 20px;
+    }
+
+    /* Ẩn radio button gốc, tự vẽ lại cho đẹp */
+    .nhom-radio input[type="radio"] {
+      display: none;   /* Ẩn nút radio thật */
+    }
+
+    /* label bọc mỗi lựa chọn giới tính */
+    .nhan-radio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--mau-input);
+      border-radius: 10px;
+      cursor: pointer;   /* Con trỏ thành bàn tay khi hover */
+      border: 2px solid transparent;
+      color: var(--mau-chu-mo);
+      font-size: 14px;
+      transition: all 0.2s ease;
+      flex: 1;           /* Mỗi item chiếm đều nhau */
+      justify-content: center;
+    }
+    .nhan-radio:hover {
+      border-color: rgba(255,107,107,0.3);
+      color: var(--mau-chu);
+    }
+    /* :checked + label = label đứng sau radio đang được chọn */
+    .nhom-radio input[type="radio"]:checked + .nhan-radio {
+      border-color: var(--mau-chinh);
+      background: rgba(255,107,107,0.1);
+      color: var(--mau-chinh);
+    }
+
+    /* ---- CHECKBOX "Ghi nhớ đăng nhập" ---- */
+    .nhom-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      cursor: pointer;
+    }
+    .nhom-checkbox input[type="checkbox"] {
+      display: none;  /* Ẩn checkbox thật */
+    }
+    .hop-check {       /* Hộp check tự vẽ */
+      width: 20px; height: 20px;
+      border: 2px solid rgba(160,174,192,0.4);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .hop-check span {  /* Dấu ✓ */
+      color: white;
+      font-size: 12px;
+      opacity: 0;      /* Ẩn khi chưa check */
+      transition: opacity 0.2s ease;
+    }
+    /* Khi checkbox được tick: đổi màu hộp và hiện dấu ✓ */
+    .nhom-checkbox input[type="checkbox"]:checked ~ .hop-check {
+      background: var(--mau-chinh);
+      border-color: var(--mau-chinh);
+    }
+    .nhom-checkbox input[type="checkbox"]:checked ~ .hop-check span {
+      opacity: 1;  /* Hiện dấu ✓ */
+    }
+    .nhan-check {
+      color: var(--mau-chu-mo);
+      font-size: 14px;
+      user-select: none; /* Không cho bôi đen text */
+    }
+
+    /* ---- NÚT ĐĂNG NHẬP ---- */
+    .nut-dangnhap {
+      width: 100%;
+      padding: 15px;
+      
+      /* Gradient ngang từ đỏ sang đỏ cam */
+      background: linear-gradient(135deg, var(--mau-chinh), #ff8e53);
+      
+      border: none;        /* Xóa viền mặc định của button */
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;    /* Để hiệu ứng sóng không tràn ra */
+    }
+    
+    /* :hover = khi di chuột vào nút */
+    .nut-dangnhap:hover {
+      transform: translateY(-2px);            /* Nhấc lên 2px */
+      box-shadow: 0 8px 25px rgba(255,107,107,0.4); /* Bóng đỏ */
+    }
+    
+    /* :active = khi đang nhấn nút */
+    .nut-dangnhap:active {
+      transform: translateY(0);  /* Trở về vị trí cũ */
+    }
+
+    /* Hiệu ứng SÓNG khi click nút */
+    .nut-dangnhap .song {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      width: 0; height: 0;
+      transform: translate(-50%, -50%); /* Căn từ điểm click */
+      animation: lanSong 0.6s ease-out forwards;
+    }
+
+    /* ---- LINK QUÊN MẬT KHẨU ---- */
+    .lien-ket {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .lien-ket a {
+      color: var(--mau-phu);
+      text-decoration: none; /* Xóa gạch chân mặc định */
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+    .lien-ket a:hover {
+      color: var(--mau-chinh);
+    }
+
+    /* ---- THÔNG BÁO (hiện khi đăng nhập) ---- */
+    .thong-bao {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
+      
+      /* Ẩn mặc định */
+      display: none;
+      
+      animation: hienRa 0.3s ease-out;
+    }
+    .thong-bao.loi {     /* Thông báo lỗi */
+      background: rgba(255,107,107,0.15);
+      border: 1px solid rgba(255,107,107,0.3);
+      color: #ff8a8a;
+    }
+    .thong-bao.ok {      /* Thông báo thành công */
+      background: rgba(78,205,196,0.15);
+      border: 1px solid rgba(78,205,196,0.3);
+      color: #4ecdc4;
+    }
+
+    /* ================================================
+       KEYFRAMES - Định nghĩa CÁC BƯỚC của animation
+       @keyframes tên-animation { từ { } đến { } }
+    ================================================ */
+
+    /* Animation: card xuất hiện từ dưới lên */
+    @keyframes hienRa {
+      from {
+        opacity: 0;              /* Trong suốt */
+        transform: translateY(30px); /* Dịch xuống 30px */
+      }
+      to {
+        opacity: 1;              /* Hiện rõ */
+        transform: translateY(0);    /* Về vị trí gốc */
+      }
+    }
+
+    /* Animation: icon nhảy từ trên xuống */
+    @keyframes nhayLen {
+      from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-20deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    /* Animation: sóng lan ra khi click nút */
+    @keyframes lanSong {
+      to {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+      }
+    }
+
+    /* Animation: vòng trang trí xoay */
+    @keyframes xoay {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ---- RESPONSIVE: Điều chỉnh cho điện thoại ---- 
+       @media: áp dụng CSS khi điều kiện đúng
+       max-width: 480px = màn hình nhỏ hơn 480px (phone) */
+    @media (max-width: 480px) {
+      .card {
+        width: 90%;         /* Chiếm 90% chiều rộng màn hình */
+        padding: 35px 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==========================
+       HTML - CẤU TRÚC TRANG
+       Mỗi thẻ là một "hộp" có thể nhìn thấy
+  ========================== -->
+<a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Quay lại Trang Chủ
+</a>
+  <div class="card">
+    <!-- div: thẻ "hộp" không có ý nghĩa đặc biệt, dùng để nhóm các thứ -->
+    <!-- class="card": đặt tên để CSS tìm và tô màu -->
+
+    <!-- TIÊU ĐỀ -->
+    <div class="tieu-de">
+      <span class="bieu-tuong">🔐</span>
+      <h1>Đăng Nhập</h1>
+      <!-- h1: tiêu đề lớn nhất (Heading 1) -->
+      <p>Chào mừng bạn trở lại!</p>
+    </div>
+
+    <!-- THÔNG BÁO (ẩn mặc định, JS sẽ hiển thị) -->
+    <div class="thong-bao" id="thongBao"></div>
+    <!-- id="thongBao": định danh duy nhất để JS tìm đúng thẻ này -->
+
+    <!-- Ô NHẬP TÊN ĐĂNG NHẬP -->
+    <div class="nhom-input">
+      <label for="tenDangNhap">👤 Tên đăng nhập</label>
+      <!-- for="tenDangNhap": kết nối label với input có id tương ứng
+           → Click vào label sẽ focus vào input -->
+      <div class="vo-input">
+        <input 
+          type="text"              
+          id="tenDangNhap"          
+          placeholder="Nhập tên của bạn..."
+          autocomplete="username"   
+        >
+        <!-- type="text": ô nhập chữ thường
+             placeholder: chữ gợi ý khi ô trống
+             autocomplete: gợi ý tên đã lưu -->
+      </div>
+    </div>
+
+    <!-- Ô NHẬP MẬT KHẨU -->
+    <div class="nhom-input">
+      <label for="matKhau">🔑 Mật khẩu</label>
+      <div class="vo-input">
+        <input 
+          type="password"           
+          id="matKhau"
+          placeholder="Nhập mật khẩu..."
+          autocomplete="current-password"
+        >
+        <!-- type="password": ẩn ký tự thành ● -->
+      </div>
+    </div>
+
+    <!-- GIỚI TÍNH (radio buttons) -->
+    <span class="gioi-tinh-label">⚥ Giới tính</span>
+    <div class="nhom-radio">
+
+      <!-- RADIO NAM -->
+      <input type="radio" name="gioiTinh" id="nam" value="nam" checked>
+      <!-- name="gioiTinh": các radio cùng name → chỉ chọn được 1
+           checked: được chọn sẵn
+           value: giá trị gửi đi khi chọn -->
+      <label class="nhan-radio" for="nam">♂ Nam</label>
+
+      <!-- RADIO NỮ -->
+      <input type="radio" name="gioiTinh" id="nu" value="nu">
+      <label class="nhan-radio" for="nu">♀ Nữ</label>
+
+      <!-- RADIO KHÁC -->
+      <input type="radio" name="gioiTinh" id="khac" value="khac">
+      <label class="nhan-radio" for="khac">⚧ Khác</label>
+    </div>
+
+    <!-- CHECKBOX GHI NHỚ -->
+    <label class="nhom-checkbox">
+      <input type="checkbox" id="ghiNho">
+      <!-- checkbox: ô vuông tick/untick -->
+      <div class="hop-check">
+        <span>✓</span>
+      </div>
+      <span class="nhan-check">Ghi nhớ đăng nhập</span>
+    </label>
+
+    <!-- NÚT ĐĂNG NHẬP -->
+    <button class="nut-dangnhap" id="nutDangNhap" onclick="xuLyDangNhap(event)">
+      Đăng Nhập →
+    </button>
+    <!-- onclick="xuLyDangNhap(event)": khi click → gọi hàm JS -->
+
+    <!-- LINK QUÊN MẬT KHẨU -->
+    <div class="lien-ket">
+      <a href="#">Quên mật khẩu? 🤔</a>
+    </div>
+  </div>
+
+  <!-- ==========================
+       JAVASCRIPT - XỬ LÝ HÀNH VI
+       JS làm trang web "sống động", phản ứng với người dùng
+  ========================== -->
+  <script>
+    // ==================================================
+    // JavaScript chạy sau khi HTML đã tải xong
+    // Dùng để: kiểm tra dữ liệu, xử lý sự kiện, thay đổi nội dung
+    // ==================================================
+
+    // ---- HÀM XỬ LÝ ĐĂNG NHẬP ----
+    // function = khối lệnh có thể gọi lại nhiều lần
+    // event = thông tin về sự kiện click (vị trí chuột, v.v.)
+    function xuLyDangNhap(event) {
+
+      // Tạo hiệu ứng SÓNG tại vị trí click
+      taoHieuUngSong(event);
+
+      // Lấy giá trị từ các ô nhập
+      // document.getElementById('id'): tìm thẻ HTML theo id
+      // .value: lấy nội dung trong ô nhập
+      const ten = document.getElementById('tenDangNhap').value.trim();
+      // .trim(): xóa khoảng trắng đầu/cuối
+      const matKhau = document.getElementById('matKhau').value.trim();
+
+      // ---- KIỂM TRA DỮ LIỆU ----
+      // Nếu ô trống → hiện thông báo lỗi, dừng lại
+      if (ten === '') {
+        hienThongBao('❌ Vui lòng nhập tên đăng nhập!', 'loi');
+        document.getElementById('tenDangNhap').focus(); // focus = đưa con trỏ vào ô
+        return; // Dừng hàm tại đây
+      }
+
+      if (matKhau === '') {
+        hienThongBao('❌ Vui lòng nhập mật khẩu!', 'loi');
+        document.getElementById('matKhau').focus();
+        return;
+      }
+
+      if (matKhau.length < 6) {
+        // .length: đếm số ký tự
+        hienThongBao('❌ Mật khẩu phải có ít nhất 6 ký tự!', 'loi');
+        return;
+      }
+
+      // ---- GIẢ LẬP ĐĂNG NHẬP THÀNH CÔNG ----
+      // (Thực tế sẽ gửi dữ liệu lên server)
+      
+      // Lấy giới tính được chọn
+      // querySelectorAll: tìm tất cả thẻ khớp
+      const radioButtons = document.querySelectorAll('input[name="gioiTinh"]');
+      let gioiTinh = 'nam';
+      // Vòng lặp for...of: duyệt qua từng item
+      for (const radio of radioButtons) {
+        if (radio.checked) {    // .checked: true nếu đang được chọn
+          gioiTinh = radio.value;
+          break; // Tìm được rồi → thoát vòng lặp
+        }
+      }
+
+      // Hiển thị thông báo thành công
+      hienThongBao(`✅ Xin chào ${ten}! Đăng nhập thành công!`, 'ok');
+      // Template literal (backtick ``): nhúng biến vào chuỗi bằng ${}
+
+      // Đổi text nút sau 1 giây
+      // setTimeout(hàm, miliseconds): chạy hàm sau X ms
+      setTimeout(() => {
+        // Arrow function (() => {}): cách viết hàm ngắn gọn
+        document.getElementById('nutDangNhap').textContent = '✓ Đã đăng nhập!';
+      }, 1000); // 1000ms = 1 giây
+    }
+
+    // ---- HÀM HIỂN THỊ THÔNG BÁO ----
+    function hienThongBao(noiDung, loai) {
+      const hop = document.getElementById('thongBao');
+      
+      // Đặt nội dung và hiển thị
+      hop.textContent = noiDung;     // .textContent: thay đổi chữ bên trong
+      hop.className = `thong-bao ${loai}`; // .className: thay đổi class CSS
+      hop.style.display = 'block';   // .style: thay đổi CSS trực tiếp
+      
+      // Tự ẩn sau 4 giây
+      setTimeout(() => {
+        hop.style.display = 'none';
+      }, 4000);
+    }
+
+    // ---- HÀM TẠO HIỆU ỨNG SÓNG KHI CLICK ----
+    function taoHieuUngSong(event) {
+      const nut = document.getElementById('nutDangNhap');
+      
+      // Tạo thẻ div mới bằng JS
+      const song = document.createElement('div');
+      song.classList.add('song'); // Thêm class CSS
+      
+      // Tính vị trí click tương đối với nút
+      const rect = nut.getBoundingClientRect(); // Lấy tọa độ nút
+      song.style.left = (event.clientX - rect.left) + 'px';
+      song.style.top  = (event.clientY - rect.top) + 'px';
+      
+      nut.appendChild(song); // Thêm vào nút
+      
+      // Xóa sau khi animation xong (600ms)
+      setTimeout(() => song.remove(), 600);
+    }
+
+    // ---- SỰ KIỆN BÀN PHÍM ----
+    // Nhấn Enter trong ô nhập → tự động click nút
+    document.addEventListener('keypress', function(event) {
+      // event.key: phím nào được nhấn
+      if (event.key === 'Enter') {
+        document.getElementById('nutDangNhap').click(); // Giả lập click
+      }
+    });
+  </script>
+
+</body>
+</html>
