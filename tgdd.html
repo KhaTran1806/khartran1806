@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao diện Laptop - Thegioididong Clone</title>
+    <style>
+        /* ================= 1. CẤU HÌNH CHUNG (RESET CSS) ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f3f3f3;
+            color: #333;
+        }
+        .container {
+            width: 1200px;
+            margin: 0 auto; /* Căn giữa toàn bộ nội dung web vào giữa màn hình */
+        }
+
+        /* ================= 2. KHỐI HEADER (VÙNG ĐẦU TRANG MÀU VÀNG) ================= */
+        header {
+            background-color: #ffd400; /* Màu vàng đặc trưng tgdd */
+            padding: 10px 0;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* CẬP NHẬT: Thêm Flexbox cho logo để chữ và ảnh thẳng hàng */
+        .logo {
+            font-weight: bold;
+            font-size: 20px;
+            text-decoration: none;
+            color: #000;
+            display: flex;         /* Kích hoạt flexbox */
+            align-items: center;   /* Căn giữa ảnh và chữ theo chiều dọc */
+            gap: 8px;              /* Tạo khoảng cách 8px giữa logo và chữ */
+        }
+
+        /* THÊM MỚI: CSS định dạng riêng cho hình ảnh logo */
+        .logo-img {
+            height: 28px;          /* Giới hạn chiều cao vừa vặn với header */
+            width: auto;           /* Tự động co dãn chiều rộng theo tỷ lệ ảnh */
+            object-fit: contain;   /* Giữ nguyên tỉ lệ ảnh, không móp méo */
+        }
+
+        .search-bar {
+            width: 400px;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+        }
+        .header-menu a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #000;
+            font-size: 14px;
+        }
+
+        /* Thanh điều hướng danh mục (Điện thoại, Laptop...) */
+        nav {
+            background-color: #ffd400;
+            border-top: 1px solid #e5be00;
+            padding: 8px 0;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ================= 3. KHỐI BANNER KHUYẾN MÃI ================= */
+        .promo-banners {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        /* Sửa lại class này */
+.banner-item {
+    flex: 1;
+    height: 150px; /* Bạn có thể tăng lên 200px nếu muốn banner to hơn */
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden; /* Giúp bo góc ảnh theo thẻ cha */
+}
+
+/* THÊM MỚI ĐOẠN NÀY: Giúp hình ảnh banner tự căn chỉnh hoàn hảo */
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Tự động cắt cúp ảnh vừa khít với khung khung 150px */
+}
+
+        /* ================= 4. BỘ LỌC (FILTER BAR) ================= */
+        .filter-bar {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .filter-btn.active {
+            border-color: #288ad6;
+            color: #288ad6;
+        }
+
+        /* ================= 5. LƯỚI SẢN PHẨM (PRODUCT GRID) ================= */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Chia thành 4 cột bằng nhau */
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #f1f1f1;
+            transition: transform 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px); /* Hiệu ứng nhích lên khi di chuột vào */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            width: 100%;
+            height: 160px;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+        .product-tags {
+            font-size: 11px;
+            background: #f1f1f1;
+            padding: 2px 5px;
+            display: inline-block;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            height: 40px;
+            overflow: hidden;
+        }
+        .product-spec {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .product-price {
+            color: #bf081f;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Nút xem thêm */
+        .view-more-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #288ad6;
+            color: #288ad6;
+            background: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* ================= 6. FOOTER (CHÂN TRANG) ================= */
+        footer {
+            background-color: #fff;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-col {
+            flex: 1;
+        }
+        .footer-col h4 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        .footer-col ul li a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-top">
+            
+            <a href="#" class="logo">
+                <img src="hinhanh/tgddlg.webp" alt="Icon" class="logo-img">
+                thegioididong.com
+            </a>
+            
+            <input type="text" class="search-bar" placeholder="Cơ hội nhận mã giảm đến 50%...">
+            <div class="header-menu">
+                <a href="#">Đăng nhập</a>
+                <a href="#">Giỏ hàng</a>
+                <a href="#">Hồ Chí Minh</a>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#">Điện thoại</a></li>
+                <li><a href="#">Laptop</a></li>
+                <li><a href="#">Phụ kiện</a></li>
+                <li><a href="#">Smartwatch</a></li>
+                <li><a href="#">Đồng hồ</a></li>
+                <li><a href="#">Tablet</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <section class="promo-banners">
+    <a href="#" class="banner-item">
+        <img src="#" alt="Online Friday" class="banner-img">
+    </a>
+    <a href="#" class="banner-item">
+        <img src="#" alt="Khuyến mãi Apple" class="banner-img">
+    </a>
+</section>
+
+        <section class="filter-bar">
+            <button class="filter-btn active">Bộ lọc 🛒</button>
+            <button class="filter-btn">ASUS</button>
+            <button class="filter-btn">HP</button>
+            <button class="filter-btn">DELL</button>
+            <button class="filter-btn">MacBook</button>
+            <button class="filter-btn">Lenovo</button>
+            <button class="filter-btn">Acer</button>
+        </section>
+
+       <section class="product-grid">
+            
+            <div class="product-card">
+                <img src="hinhanh/image1.webp" alt="Laptop HP 15" class="product-img">
+                <span class="product-tags">Trả chậm 0%</span>
+                <div class="product-name">Laptop HP 15 fd0079TU i3 1315U</div>
+                <div class="product-spec">RAM 8 GB | SSD 512 GB</div>
+                <div class="product-price">11.490.000 đ</div>
+            </div>
+
+            <div class="product-card">
+                <img src="hinhanh/image4.jpg" alt="MacBook Air 13 inch M1" class="product-img">
+                <span class="product-tags">Giá rẻ quá</span>
+                <div class="product-name">MacBook Air 13 inch M1 8GB/256GB</div>
+                <div class="product-spec">Apple M1 | 8 GB | 256 GB</div>
+                <div class="product-price">18.490.000 đ</div>
+            </div>
+
+            <div class="product-card">
+                <img src="hinhanh/image3.jpg" alt="Laptop Dell Inspiron 15 3520 i5" class="product-img">
+                <span class="product-tags">Trả chậm 0%</span>
+                <div class="product-name">Laptop Dell Inspiron 15 3520 i5</div>
+                <div class="product-spec">RAM 16 GB | SSD 512 GB</div>
+                <div class="product-price">15.290.000 đ</div>
+            </div>
+
+            <div class="product-card">
+                <img src="hinhanh/image2.jpg" alt="Asus Vivobook Go 15" class="product-img">
+                <span class="product-tags">Bán chạy</span>
+                <div class="product-name">Laptop Asus Vivobook Go 15 E1504FA</div>
+                <div class="product-spec">Ryzen 5 | RAM 16 GB</div>
+                <div class="product-price">12.990.000 đ</div>
+            </div>
+
+        </section>
+
+
+        <a href="#" class="view-more-btn">Xem thêm 451 Laptop ↓</a>
+
+    </main>
+
+    <footer>
+        <div class="container footer-columns">
+            <div class="footer-col">
+                <h4>Tổng đài hỗ trợ</h4>
+                <ul>
+                    <li><a href="#">Gọi mua: 1900 232 460</a></li>
+                    <li><a href="#">Khiếu nại: 1800 1062</a></li>
+                    <li><a href="#">Bảo hành: 1900 232 464</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Về công ty</h4>
+                <ul>
+                    <li><a href="#">Giới thiệu công ty (MWG.vn)</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Gửi góp ý, khiếu nại</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Thông tin khác</h4>
+                <ul>
+                    <li><a href="#">Tích điểm Quà tặng VIP</a></li>
+                    <li><a href="#">Lịch sử mua hàng</a></li>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
