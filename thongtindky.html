@@ -14,7 +14,27 @@
             min-height: 100vh;
             margin: 0;
         }
+/*Back ve index */
+        .back-btn{
+    position:fixed;
+    top:20px;
+    left:20px;
 
+    background:#ffcfec;
+    color:#fff;
+    text-decoration:none;
+
+    padding:14px 22px;
+    border-radius:15px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-weight:600;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
         .form-container {
             background-color: #eeeeee;
             width: 100%;
@@ -144,7 +164,10 @@
     </style>
 </head>
 <body>
-
+<a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Quay lại Trang Chủ
+</a>
 <div class="form-container">
     <div class="form-header">
         Thông tin đăng ký
