@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin đăng ký</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e4e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #eeeeee;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            background-color: #728c34; /* Màu xanh rêu của tiêu đề */
+            color: white;
+            text-align: center;
+            padding: 18px;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .form-body {
+            padding: 35px 40px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            width: 130px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Kiểu đường gạch chân cho các ô nhập liệu giống trong hình */
+        .form-group .input-control {
+            flex: 1;
+            border: none;
+            border-bottom: 1px solid #7c7c7c;
+            background: transparent;
+            padding: 6px 0;
+            font-size: 14px;
+            outline: none;
+            color: #333;
+        }
+
+        .form-group .input-control::placeholder {
+            color: #999;
+        }
+
+        /* Thao tác chọn Radio và Checkbox */
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 25px;
+            flex: 1;
+        }
+
+        .radio-group label, .checkbox-group label {
+            width: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        select.input-control {
+            cursor: pointer;
+            padding-right: 5px;
+        }
+
+        /* Phần mô tả sơ lược dạng ô lớn */
+        .textarea-group {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .textarea-group label {
+            width: 100%;
+        }
+
+        .textarea-group textarea {
+            width: 100%;
+            height: 110px;
+            border: 1px solid #8c8c8c;
+            background-color: #e1e1e1;
+            padding: 10px;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        /* Cụm nút bấm phía dưới */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            color: #ffffff;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn-cancel {
+            background-color: #556b2f; /* Màu nút Hủy bỏ */
+        }
+
+        .btn-submit {
+            background-color: #607d2c; /* Màu nút Đăng ký */
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">
+        Thông tin đăng ký
+    </div>
+    <form class="form-body" action="#" method="POST">
+        <div class="form-group">
+            <label for="hoten">Họ tên:</label>
+            <input type="text" id="hoten" class="input-control" placeholder="Nhập họ tên">
+        </div>
+
+        <div class="form-group">
+            <label for="ngaysinh">Ngày sinh:</label>
+            <input type="date" id="ngaysinh" class="input-control">
+        </div>
+
+        <div class="form-group">
+            <label>Giới tính:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="gioitinh" value="Nam"> Nam</label>
+                <label><input type="radio" name="gioitinh" value="Nu"> Nữ</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="diachi">Địa chỉ:</label>
+            <input type="text" id="diachi" class="input-control" placeholder="Nhập địa chỉ">
+        </div>
+
+        <div class="form-group">
+            <label for="mssv">MSSV:</label>
+            <input type="text" id="mssv" class="input-control" placeholder="Nhập mã số sinh viên">
+        </div>
+
+        <div class="form-group">
+            <label for="lop">Lớp:</label>
+            <select id="lop" class="input-control">
+                <option value="DA25TTC">DA25TTC</option>
+                <option value="DA25TTB">DA25TTB</option>
+                <option value="DA25TTA">DA25TTA</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="sdt">Số điện thoại:</label>
+            <input type="tel" id="sdt" class="input-control" placeholder="Nhập số điện thoại">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" class="input-control" placeholder="Nhập email">
+        </div>
+
+        <div class="form-group">
+            <label for="avatar">Ảnh đại diện:</label>
+            <input type="file" id="avatar" style="flex: 1; font-size: 14px;">
+        </div>
+
+        <div class="form-group">
+            <label>Sở trường:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="sotruong" value="thietke"> Thiết kế web</label>
+                <label><input type="checkbox" name="sotruong" value="laptrinh"> Lập trình web</label>
+                <label><input type="checkbox" name="sotruong" value="tiengtrung"> Thành thạo tiếng Trung</label>
+            </div>
+        </div>
+
+        <div class="form-group textarea-group">
+            <label for="mota">Mô tả sơ lược:</label>
+            <textarea id="mota"></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-cancel">Hủy bỏ</button>
+            <button type="submit" class="btn btn-submit">Đăng ký</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
